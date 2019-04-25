@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 50px 200px;
+  box-shadow: 4px 4px 8px #888888;
+}
+
+.container__item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  border-bottom: 0.5px solid #E6E6E6;
+}
+
+.header {
+  padding: 10px;
+  justify-content: space-between;
+}
+
+.container__item--payment {
+  width: 60%;
+  padding: 10px;
+}
+
+.container__item--cart {
+  width: 40%;
+  padding: 10px;
+  background-color: #E6E6E6;
+}
+
+.container__item--close:hover {
+  color: red;
+  cursor: pointer;
+}
