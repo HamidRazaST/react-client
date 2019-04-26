@@ -3,7 +3,7 @@
   <head>
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="icon" type="image/gif" sizes="16x16" href="./img/favicon.ico">
+    <link rel="icon" type="image/gif" sizes="16x16" href="./images/icons/favicon.ico">
     <link rel="stylesheet" type="text/css" href="./css/style.css">
   </head>
   <body>
@@ -15,8 +15,143 @@
       </div>
 
       <div class="container__item body">
-        <div class="container__item--payment">Payment Block</div>
-        <div class="container__item--cart">Cart Block</div>
+        <div class="container__item--payment">
+
+          <div class="container__item--payment-wallet">
+            <div class="container-item-header">Wallet</div>
+            <div class="container-wallet-item">
+
+              <div class="img">
+                <img src="./images/cards/discover.png"/>
+                <h6>Ending with 8899</h6>
+              </div>
+
+              <div class="img active">
+                <img src="./images/cards/mastercard.png"/>
+                <h6>Ending with 8899</h6>
+              </div>
+
+              <div class="img">
+                <img src="./images/cards/visa.png"/>
+                <h6>Ending with 8899</h6>
+              </div>
+            </div>
+          </div>
+
+          <div class="container__item--payment-card">
+            <div class="container-item-header">New Card</div>
+            <div class="container-card-item">
+              <input class="field" type="text" placeholder="Name on Card"/>
+              <input class="field" type="text" placeholder="xxxx-xxxx-xxxx-xxxx"/>
+              <div class="field-div">
+                <input class="field" type="text" placeholder="MM/YY"/>
+                <input class="field" type="text" placeholder="CVV"/>
+              </div>
+              <input class="field success-button" type="button" value="CONTINUE">
+            </div>
+          </div>
+        </div>
+
+        <div class="container__item--cart">
+          <div class="container__item--cart-header">
+
+            <div class="container__item--cart-item">
+              <div class="cart--item-image">
+                <img class="" src='./images/products/mobile-holder.jpg'>
+              </div>
+              <div class="cart--item-content">
+                <div class="cart--item-content-header">Mobile Holder</div>
+                <div class="cart--item-content-body">
+                  <div class="cart--item-color">Black</div>
+                  <div class="cart--item-quantity"><b>Quantity: </b>1</div>
+                </div>
+              </div>
+              <div class="cart--item-price"><p>$ 10.00</p></div>
+            </div>
+            
+            <hr/>
+    
+            <div class="container__item--cart-item">
+              <div class="cart--item-image">
+                <img class="" src='./images/products/rado.jpg'>
+              </div>
+              <div class="cart--item-content">
+                <div class="cart--item-content-header">Rado Watch</div>
+                <div class="cart--item-content-body">
+                  <div class="cart--item-color">Black</div>
+                  <div class="cart--item-quantity"><b>Quantity: </b>1</div>
+                </div>
+              </div>
+              <div class="cart--item-price">$ 10.00</div>
+            </div>
+
+            <hr/>
+    
+            <div class="container__item--cart-item">
+              <div class="cart--item-image">
+                <img class="" src='./images/products/usb-c-2-micro.jpeg'>
+              </div>
+              <div class="cart--item-content">
+                <div class="cart--item-content-header">C type to Micro Convertor</div>
+                <div class="cart--item-content-body">
+                  <div class="cart--item-color">Black</div>
+                  <div class="cart--item-quantity"><b>Quantity: </b>1</div>
+                </div>
+              </div>
+              <div class="cart--item-price">$ 10.00</div>
+            </div>
+
+            <hr/>
+
+            <div class="container__item--cart-item">
+              <div class="cart--item-image">
+                <img class="" src='./images/products/hard-case.jpg'>
+              </div>
+              <div class="cart--item-content">
+                <div class="cart--item-content-header">Mobile Case</div>
+                <div class="cart--item-content-body">
+                  <div class="cart--item-color">Black</div>
+                  <div class="cart--item-quantity"><b>Quantity: </b>1</div>
+                </div>
+              </div>
+              <div class="cart--item-price">$ 10.00</div>
+            </div>
+
+          </div>
+
+          <div class="container__item--cart-value">
+
+            <div class="container__item--cart-summary">
+
+              <hr/>
+
+              <div class="cart--subtotal">
+                <div class="cart--summary-name">Sub Total</div>
+                <div class="cart--summary-price">$ 100.00</div>
+              </div>
+
+              <div class="cart--subtotal">
+                <div class="cart--summary-name">Shipping</div>
+                <div class="cart--summary-price">$ 10.00</div>
+              </div>
+
+              <div class="cart--subtotal">
+                <div class="cart--summary-name">Taxes</div>
+                <div class="cart--summary-price">$ 5.00</div>
+              </div>
+
+            </div>
+
+            <hr/>
+
+            <div class="container__item--cart-total">
+              <div class="cart--summary-name">Total</div>
+              <div class="cart--summary-price">$ 115.00</div>
+            </div>
+
+          </div>
+
+        </div>
       </div>
     </div>
   </body>
