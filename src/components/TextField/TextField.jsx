@@ -3,13 +3,6 @@ import PropTypes from 'prop-types';
 
 import { root, child } from './style';
 
-const propTypes = {
-  message: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  error: PropTypes.string.isRequired,
-  disabled: PropTypes.bool.isRequired,
-};
-
 class TextField extends Component {
   constructor(props) {
     super(props);
@@ -18,7 +11,6 @@ class TextField extends Component {
 
   render() {
     const {
-      message,
       value,
       error,
       disabled,
@@ -26,9 +18,9 @@ class TextField extends Component {
 
     let color;
 
-    if (error.length) {
+    if (error) {
       color = '#fc7e7e';
-    } else if (JSON.parse(disabled)) {
+    } else if (disabled) {
       color = '#e2e2e2';
     } else {
       color = '#f9a05c';
@@ -36,21 +28,23 @@ class TextField extends Component {
 
     return (
       <div style={root}>
-        <h3>{message}</h3>
-
         <input
           type="text"
           value={value}
-          disabled={JSON.parse(disabled)}
+          disabled={!!disabled}
           style={{ ...child, borderColor: color }}
         />
 
-        { error.length ? <span style={{ color }}>{error}</span> : '' }
+        { error ? <span style={{ color }}>{error}</span> : '' }
       </div>
     );
   }
 }
 
-TextField.propTypes = propTypes;
+TextField.propTypes = {
+  value: PropTypes.string.isRequired,
+  error: PropTypes.string.isRequired,
+  disabled: PropTypes.bool.isRequired,
+};
 
 export default TextField;
