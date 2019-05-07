@@ -1,50 +1,51 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { root, child } from './style';
 
-class TextField extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
+const TextField = (props) => {
+  const {
+    value,
+    error,
+    disabled,
+    onChange,
+  } = props;
+
+  let color;
+
+  if (error) {
+    color = '#fc7e7e';
+  } else if (disabled) {
+    color = '#e2e2e2';
+  } else {
+    color = 'lightgray';
   }
 
-  render() {
-    const {
-      value,
-      error,
-      disabled,
-    } = this.props;
+  return (
+    <div style={root}>
+      <input
+        type="text"
+        value={value}
+        disabled={!!disabled}
+        style={{ ...child, borderColor: color }}
+        onChange={onChange}
+      />
 
-    let color;
+      { error ? <span style={{ color }}>{error}</span> : '' }
+    </div>
+  );
+};
 
-    if (error) {
-      color = '#fc7e7e';
-    } else if (disabled) {
-      color = '#e2e2e2';
-    } else {
-      color = '#f9a05c';
-    }
-
-    return (
-      <div style={root}>
-        <input
-          type="text"
-          value={value}
-          disabled={!!disabled}
-          style={{ ...child, borderColor: color }}
-        />
-
-        { error ? <span style={{ color }}>{error}</span> : '' }
-      </div>
-    );
-  }
-}
+TextField.defaultProps = {
+  error: '',
+  disabled: false,
+};
 
 TextField.propTypes = {
   value: PropTypes.string.isRequired,
-  error: PropTypes.string.isRequired,
-  disabled: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
+  error: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 export default TextField;
