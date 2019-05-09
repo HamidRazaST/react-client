@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { PUBLIC_IMAGE_FOLDER, DEFAULT_BANNER_IMAGE } from '../../configs';
 import { getRandomNumber, getNextRoundRobin } from '../../lib';
-import styles from './style';
+import { baseStyle, sliderStyle } from './style';
 
 class Slider extends Component {
   constructor(props) {
@@ -48,15 +48,17 @@ class Slider extends Component {
     const { index } = this.state;
 
     return (
-      <img
-        alt={altText}
-        src={
-          banners
-            ? PUBLIC_IMAGE_FOLDER + banners[index]
-            : PUBLIC_IMAGE_FOLDER + defaultBanner}
-        height={height}
-        style={styles}
-      />
+      <div style={{ ...baseStyle }}>
+        <img
+          alt={altText}
+          src={
+            banners
+              ? PUBLIC_IMAGE_FOLDER + banners[index]
+              : PUBLIC_IMAGE_FOLDER + defaultBanner}
+          height={height}
+          style={{ ...sliderStyle }}
+        />
+      </div>
     );
   }
 }

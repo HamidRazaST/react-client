@@ -1,7 +1,7 @@
 const PUBLIC_IMAGE_FOLDER = '/images/';
 const DEFAULT_BANNER_IMAGE = 'banners/default.png';
 
-const sports = [
+const sportOption = [
   {
     cricket: 'Cricket',
   },
@@ -10,14 +10,14 @@ const sports = [
   },
 ];
 
-const cricket = ['Wicket Keeper', 'Batsman', 'Bowler', 'All Rounder'];
+const cricketOption = ['Wicket Keeper', 'Batsman', 'Bowler', 'All Rounder'];
 
-const football = ['Defender', 'Striker'];
+const footballOption = ['Defender', 'Striker'];
 
 export {
   PUBLIC_IMAGE_FOLDER,
   DEFAULT_BANNER_IMAGE,
-  sports,
-  cricket,
-  football,
+  sportOption,
+  cricketOption,
+  footballOption,
 };

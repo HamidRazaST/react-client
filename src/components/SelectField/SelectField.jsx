@@ -2,27 +2,35 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { root, child } from './style';
+import { baseStyle, selectFieldStyle } from './style';
 
 const SelectField = (props) => {
   const {
     error,
     value,
-    onChange,
     options,
     defaultText,
+    ...rest
   } = props;
 
   return (
-    <div style={root}>
-      <select style={child} onChange={onChange}>
-        <option value="" selected>{defaultText}</option>
+    <div style={{ ...baseStyle }}>
+      <select style={{ ...selectFieldStyle }} {...rest}>
+        <option key={defaultText} value="" selected>{defaultText}</option>
         {
-          options.map(
-            element => <option value={Object.keys(element)}>{Object.values(element)}</option>,
-          )
+          options
+            .map(element => (
+              <option
+                key={Object.values(element)}
+                value={Object.keys(element)}
+              >
+                {Object.values(element)}
+              </option>
+            ))
         }
       </select>
+
+      { error ? <span style={{ color: '#fc7e7e' }}>{error}</span> : '' }
     </div>
   );
 };
