@@ -8,14 +8,14 @@ const SelectField = (props) => {
   const {
     error,
     value,
-    onChange,
     options,
     defaultText,
+    ...rest
   } = props;
 
   return (
     <div style={{ ...baseStyle }}>
-      <select style={{ ...selectFieldStyle }} onChange={onChange}>
+      <select style={{ ...selectFieldStyle }} {...rest}>
         <option key={defaultText} value="" selected>{defaultText}</option>
         {
           options
@@ -29,6 +29,8 @@ const SelectField = (props) => {
             ))
         }
       </select>
+
+      { error ? <span style={{ color: '#fc7e7e' }}>{error}</span> : '' }
     </div>
   );
 };

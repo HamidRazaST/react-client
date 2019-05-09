@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { Component } from 'react';
 
 import {
@@ -25,11 +24,12 @@ class InputDemo extends Component {
     };
   }
 
-  componentDidUpdate = () => {
-    console.log(this.state);
-  }
-
   handleChange = field => (event) => {
+    if (field === 'sport') {
+      this.setState({
+        sportValue: '',
+      });
+    }
     this.setState({
       [field]: event.target.value,
     });
@@ -57,15 +57,54 @@ class InputDemo extends Component {
     return inputDemoSchema.isValidSync(value, options);
   }
 
+  handleResetValidation = field => () => {
+    this.setState({
+      error: {
+        [field]: '',
+      },
+    });
+  }
+
   handleValidation = field => () => {
-    console.log('Field is ', field);
+    const {
+      state: {
+        name,
+        sport,
+        sportValue,
+      },
+    } = this;
+
+    try {
+      let value = '';
+      if (field === 'name') {
+        value = name;
+      } else if (field === 'sport') {
+        value = sport;
+      } else if (field === 'sportValue') {
+        value = sportValue;
+      }
+
+      inputDemoSchema.validateSyncAt(field, value);
+
+      this.setState({
+        error: {
+          [field]: '',
+        },
+      });
+    } catch ({ message }) {
+      this.setState({
+        error: {
+          [field]: message,
+        },
+      });
+    }
   }
 
   render() {
     const {
       name,
       sport,
-      getError,
+      error,
     } = this.state;
 
     return (
@@ -73,15 +112,17 @@ class InputDemo extends Component {
         <h3>Name</h3>
         <TextField
           value={name}
-          error={getError.name}
+          error={error.name}
           onChange={this.handleChange('name')}
+          onClick={this.handleResetValidation('name')}
           onBlur={this.handleValidation('name')}
         />
         <h3>Select the game you play?</h3>
         <SelectField
           options={sportOption}
-          error={getError.sport}
+          error={error.sport}
           onChange={this.handleChange('sport')}
+          onClick={this.handleResetValidation('name')}
           onBlur={this.handleValidation('sport')}
         />
         {
@@ -91,8 +132,9 @@ class InputDemo extends Component {
               <RadioGroup
                 value="sport"
                 options={cricketOption}
-                error={getError.sportValue}
+                error={error.sportValue}
                 onChange={this.handleChange('sportValue')}
+                onClick={this.handleResetValidation('name')}
                 onBlur={this.handleValidation('sportValue')}
               />
             </>
@@ -105,8 +147,9 @@ class InputDemo extends Component {
               <RadioGroup
                 value="sport"
                 options={footballOption}
-                error={getError.sportValue}
+                error={error.sportValue}
                 onChange={this.handleChange('sportValue')}
+                onClick={this.handleResetValidation('name')}
                 onBlur={this.handleValidation('sportValue')}
               />
             </>
