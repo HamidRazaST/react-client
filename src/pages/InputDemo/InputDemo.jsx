@@ -17,17 +17,7 @@ class InputDemo extends Component {
       name: '',
       sport: '',
       sportValue: '',
-      hasErrors: {
-        name: true,
-        sport: true,
-        sportValue: true,
-      },
-      isTouched: {
-        name: false,
-        sport: false,
-        sportValue: false,
-      },
-      getError: {
+      error: {
         name: '',
         sport: '',
         sportValue: '',
@@ -37,7 +27,6 @@ class InputDemo extends Component {
 
   componentDidUpdate = () => {
     console.log(this.state);
-    // console.log(this.state.getError);
   }
 
   handleChange = field => (event) => {
@@ -46,59 +35,36 @@ class InputDemo extends Component {
     });
   }
 
-  handleValidation = field => () => {
+  handleIsValid = () => {
     const {
       state: {
         name,
         sport,
         sportValue,
-        getError,
       },
     } = this;
 
-    const data = {
+    const value = {
       name,
       sport,
       sportValue,
     };
 
     const options = {
-      abortEarly: true,
+      abortEarly: false,
     };
 
-    inputDemoSchema
-      .validate(data, options)
-      .then((res) => {
-        console.log('hi ', res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    return inputDemoSchema.isValidSync(value, options);
+  }
 
-    // inputDemoSchema
-    //   .validate(data, options)
-    //   .then((res) => {
-    //     console.log('hi ', res);
-    //   })
-    //   .catch(({ inner }) => {
-    //     console.log('inner = ', inner);
-    //     inner.forEach((error) => {
-    //       console.log('path = ', error.path);
-    //       this.setState({
-    //         getError: {
-    //           ...getError,
-    //           [error.path]: error.message,
-    //         },
-    //       });
-    //     });
-    //   });
+  handleValidation = field => () => {
+    console.log('Field is ', field);
   }
 
   render() {
     const {
       name,
       sport,
-      hasErrors,
       getError,
     } = this.state;
 
@@ -112,12 +78,23 @@ class InputDemo extends Component {
           onBlur={this.handleValidation('name')}
         />
         <h3>Select the game you play?</h3>
-        <SelectField options={sportOption} error={getError.sport} onChange={this.handleChange('sport')} />
+        <SelectField
+          options={sportOption}
+          error={getError.sport}
+          onChange={this.handleChange('sport')}
+          onBlur={this.handleValidation('sport')}
+        />
         {
           sport === 'cricket' && (
             <>
               <h3>What you do?</h3>
-              <RadioGroup value="sport" options={cricketOption} error={getError.sportValue} onChange={this.handleChange('sportValue')} />
+              <RadioGroup
+                value="sport"
+                options={cricketOption}
+                error={getError.sportValue}
+                onChange={this.handleChange('sportValue')}
+                onBlur={this.handleValidation('sportValue')}
+              />
             </>
           )
         }
@@ -125,13 +102,19 @@ class InputDemo extends Component {
           sport === 'football' && (
             <>
               <h3>What you do?</h3>
-              <RadioGroup value="sport" options={footballOption} error={getError.sportValue} onChange={this.handleChange('sportValue')} />
+              <RadioGroup
+                value="sport"
+                options={footballOption}
+                error={getError.sportValue}
+                onChange={this.handleChange('sportValue')}
+                onBlur={this.handleValidation('sportValue')}
+              />
             </>
           )
         }
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
           <Button value="Cancel" color="primary" />
-          { hasErrors ? <Button value="Submit" disabled /> : <Button value="Submit" /> }
+          { this.handleIsValid() ? <Button value="Submit" /> : <Button value="Submit" disabled /> }
         </div>
       </>
     );
