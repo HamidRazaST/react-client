@@ -1,34 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { root, child } from './style';
+import { baseStyle, textFieldStyle, errorStyle } from './style';
 
 const TextField = (props) => {
   const {
     value,
     error,
     disabled,
-    onChange,
+    ...rest
   } = props;
 
-  let color;
+  const { color } = errorStyle;
 
-  if (error) {
-    color = '#fc7e7e';
-  } else if (disabled) {
-    color = '#e2e2e2';
-  } else {
-    color = 'lightgray';
-  }
+  const borderColor = error ? color : 'lightgray';
 
   return (
-    <div style={root}>
+    <div style={{ ...baseStyle }}>
       <input
         type="text"
         value={value}
-        disabled={!!disabled}
-        style={{ ...child, borderColor: color }}
-        onChange={onChange}
+        disabled={disabled}
+        style={{ ...textFieldStyle, borderColor }}
+        {...rest}
       />
 
       { error ? <span style={{ color }}>{error}</span> : '' }

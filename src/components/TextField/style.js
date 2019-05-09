@@ -1,13 +1,17 @@
-const root = {
+const baseStyle = {
   display: 'flex',
   flexDirection: 'column',
 };
 
-const child = {
+const textFieldStyle = {
   padding: '10px',
   borderWidth: '2px',
   borderStyle: 'solid',
   borderRadius: '5px',
 };
 
-export { root, child };
+const errorStyle = {
+  color: '#fc7e7e',
+};
+
+export { baseStyle, textFieldStyle, errorStyle };

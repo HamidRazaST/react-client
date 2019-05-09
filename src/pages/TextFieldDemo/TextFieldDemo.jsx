@@ -12,7 +12,7 @@ const banners = [
 ];
 
 const TextFieldDemo = () => (
-  <>
+  <div style={{ display: 'flex', flexDirection: 'column' }}>
     <Slider banners={banners} random />
     <h3>This is a Disabled Input</h3>
     <TextField value="Disabled Input" disabled />
@@ -20,7 +20,7 @@ const TextFieldDemo = () => (
     <TextField value="Accessible" />
     <h3>An Input with errors</h3>
     <TextField value="101" error="Could not be greater than" />
-  </>
+  </div>
 );
 
 export default TextFieldDemo;
