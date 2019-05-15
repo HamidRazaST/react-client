@@ -24,6 +24,10 @@ class InputDemo extends Component {
     };
   }
 
+  componentDidUpdate = () => {
+    console.log(this.state);
+  }
+
   handleChange = field => (event) => {
     if (field === 'sport') {
       this.setState({
@@ -122,7 +126,7 @@ class InputDemo extends Component {
           options={sportOption}
           error={error.sport}
           onChange={this.handleChange('sport')}
-          onClick={this.handleResetValidation('name')}
+          onClick={this.handleResetValidation('sport')}
           onBlur={this.handleValidation('sport')}
         />
         {
@@ -134,7 +138,7 @@ class InputDemo extends Component {
                 options={cricketOption}
                 error={error.sportValue}
                 onChange={this.handleChange('sportValue')}
-                onClick={this.handleResetValidation('name')}
+                onClick={this.handleResetValidation('sportValue')}
                 onBlur={this.handleValidation('sportValue')}
               />
             </>
@@ -149,7 +153,7 @@ class InputDemo extends Component {
                 options={footballOption}
                 error={error.sportValue}
                 onChange={this.handleChange('sportValue')}
-                onClick={this.handleResetValidation('name')}
+                onClick={this.handleResetValidation('sportValue')}
                 onBlur={this.handleValidation('sportValue')}
               />
             </>
