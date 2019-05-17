@@ -52,7 +52,12 @@ class AddDialog extends Component {
   };
 
   componentDidUpdate = () => {
-    console.log(this.state);
+    const { hasErrors, isTouched, getErrors } = this.state;
+
+    console.log('hasErrors: ', hasErrors);
+    console.log('isTouched: ', isTouched);
+    console.log('getErrors: ', getErrors);
+    console.log('\n\n');
   }
 
   handleClickOpen = () => {
@@ -63,27 +68,62 @@ class AddDialog extends Component {
     this.setState({ open: false });
   };
 
-  handleClick = prop => () => {
+  handleClickShowPassword = prop => () => {
+    this.setState(state => ({ [prop]: !state[prop] }));
+  }
+
+  handleValueChange = prop => (event) => {
     const { isTouched } = this.state;
+    this.setState(
+      {
+        [prop]: event.target.value,
+      },
+      () => {
+        if (isTouched[prop]) {
+          this.handleCheckValidation(prop)();
+        }
+      },
+    );
+  }
+
+  handleCheckValidation = prop => async () => {
+    try {
+      const { state } = this;
+
+      this.handleIsTouched(prop)();
+      await reach(addDialogSchema, prop).validate(state[prop]);
+      this.handleErrorValue(prop, false, '')();
+    } catch ({ message }) {
+      this.handleErrorValue(prop, true, message)();
+    }
+  }
+
+  handleErrorValue = (prop, hasErrorValue, getErrorValue) => () => {
+    const { hasErrors, getErrors } = this.state;
+
     this.setState({
-      isTouched: {
-        ...isTouched,
-        [prop]: true,
+      hasErrors: {
+        ...hasErrors,
+        [prop]: hasErrorValue,
+      },
+      getErrors: {
+        ...getErrors,
+        [prop]: getErrorValue,
       },
     });
   }
 
-  handleChange = prop => (event) => {
+  handleIsTouched = prop => () => {
     const { isTouched } = this.state;
-    this.setState({ [prop]: event.target.value });
 
-    if (isTouched[prop]) {
-      this.handleCheckValidation(prop)();
+    if (!isTouched[prop]) {
+      this.setState({
+        isTouched: {
+          ...isTouched,
+          [prop]: true,
+        },
+      });
     }
-  }
-
-  handleClickShowPassword = prop => () => {
-    this.setState(state => ({ [prop]: !state[prop] }));
   }
 
   handleIsValid = () => {
@@ -108,46 +148,6 @@ class AddDialog extends Component {
     };
 
     return addDialogSchema.isValidSync(value, options);
-  }
-
-  handleValidationError = (prop, hasErrorValue, getErrorValue) => () => {
-    const { hasErrors, getErrors } = this.state;
-
-    this.setState({
-      hasErrors: {
-        ...hasErrors,
-        [prop]: hasErrorValue,
-      },
-      getErrors: {
-        ...getErrors,
-        [prop]: getErrorValue,
-      },
-    });
-  }
-
-  handlePropTouch = prop => () => {
-    const { isTouched } = this.state;
-
-    if (isTouched[prop]) {
-      this.setState({
-        isTouched: {
-          ...isTouched,
-          [prop]: true,
-        },
-      });
-    }
-  }
-
-  handleCheckValidation = prop => async () => {
-    try {
-      const { state } = this;
-
-      this.handlePropTouch(prop);
-      await reach(addDialogSchema, prop).validate(state[prop]);
-      this.handleValidationError(prop, false, '')();
-    } catch ({ message }) {
-      this.handleValidationError(prop, true, message)();
-    }
   }
 
   render() {
@@ -186,7 +186,7 @@ class AddDialog extends Component {
               label="Name"
               margin="normal"
               variant="outlined"
-              onChange={this.handleChange('name')}
+              onChange={this.handleValueChange('name')}
               onBlur={this.handleCheckValidation('name')}
               InputProps={{
                 startAdornment: (
@@ -205,7 +205,7 @@ class AddDialog extends Component {
               label="Email Address"
               margin="normal"
               variant="outlined"
-              onChange={this.handleChange('email')}
+              onChange={this.handleValueChange('email')}
               onBlur={this.handleCheckValidation('email')}
               InputProps={{
                 startAdornment: (
@@ -226,7 +226,7 @@ class AddDialog extends Component {
                   type={showPassword ? 'text' : 'password'}
                   margin="normal"
                   variant="outlined"
-                  onChange={this.handleChange('password')}
+                  onChange={this.handleValueChange('password')}
                   onBlur={this.handleCheckValidation('password')}
                   InputProps={{
                     startAdornment: (
@@ -252,7 +252,7 @@ class AddDialog extends Component {
                   type={showPasswordConfirmation ? 'text' : 'password'}
                   margin="normal"
                   variant="outlined"
-                  onChange={this.handleChange('passwordConfirmation')}
+                  onChange={this.handleValueChange('passwordConfirmation')}
                   onBlur={this.handleCheckValidation('passwordConfirmation')}
                   InputProps={{
                     startAdornment: (
@@ -274,19 +274,9 @@ class AddDialog extends Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            {
-              this.handleIsValid()
-                ? (
-                  <Button onClick={this.handleClose} color="primary">
-                    Submit
-                  </Button>
-                )
-                : (
-                  <Button onClick={this.handleClose} color="primary" disabled>
-                    Submit
-                  </Button>
-                )
-            }
+            <Button onClick={this.handleClose} color="primary" disabled={!this.handleIsValid()}>
+              Submit
+            </Button>
           </DialogActions>
         </Dialog>
       </div>
